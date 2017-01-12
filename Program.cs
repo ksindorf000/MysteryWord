@@ -14,9 +14,9 @@ namespace MysteryWord
 
         static string wordToGuess;
         static int guessCount = 0;
-        static List<string> lettersUsed;
-        static string[] charInWord;
-
+        static List<string> lettersUsed = new List<string>();
+        static List<string> charInWord = new List<string>();
+            
         /*------------------------
         Main()
         -----------------------*/
@@ -36,25 +36,31 @@ namespace MysteryWord
 
         /*------------------------
         GetWord()
-            Creates a reandom index and writes the word that is at that index
+            Creates a random index and gets the word that is at that index
+            Creates a List<string> to hold the characters of the word
             Creates an array the size of the word and fills it with blanks
         -----------------------*/
-        public static void GetWord()
+        public static string[] GetWord()
         {
             //Assign random word to variable
             var rwg = new Random();
             int randIndex = rwg.Next(wordList.Count());
             wordToGuess = wordList[randIndex];
+            string[] toDisplay = new string[wordToGuess.Count()];
 
             Console.WriteLine(wordToGuess);
 
-            //Creates an array of blanks from the word
-            charInWord = new string[wordToGuess.Count()];
+            for (int i = 0; i < wordToGuess.Count(); i++)
+            {
+                charInWord.Add(wordToGuess.Substring(i));
+            }
 
             for (int i = 0; i < charInWord.Count(); i++)
             {
-                charInWord[i] = "_ ";
+                toDisplay[i] = "_ ";
             }
+
+            return toDisplay;
 
         }
 
@@ -62,12 +68,14 @@ namespace MysteryWord
         DisplayBoard()
             Accepts and validates the user's guess
         -----------------------*/
-        public static void DisplayBoard()
+        public static void DisplayBoard(string[] toDisplay)
         {
             for (int i = 0; i < charInWord.Count(); i++)
             {
-                Console.WriteLine(charInWord[i]);
+                Console.WriteLine(toDisplay[i]);
             }
+
+            Console.WriteLine("");
         }
 
 
@@ -75,29 +83,24 @@ namespace MysteryWord
         GetGuess()
             Accepts and validates the user's guess
         -----------------------*/
-        public static void GetGuess()
+        public static void GetGuess(string[] toDisplay)
         {
             Console.WriteLine("Please enter your guess: ");
             string guess = Console.ReadLine();
-            int guessIndex;
-            bool checkMulti = true;
+            int guessIndex = 0;
 
-            //If letter has not already been guessed
-            //lettersUsed.Add(guess);
-            while (checkMulti)
+            for (int i = 0; i < charInWord.Count(); i += guessIndex)
             {
-                if (wordToGuess.Contains(guess))
+                if (charInWord[i] == guess)
                 {
                     guessIndex = wordToGuess.IndexOf(guess);
-                    charInWord[guessIndex] = guess;
-                }
-                else
-                {
-                    Console.WriteLine("That letter isn't in the word!");
-                    checkMulti = false;
+                    Console.WriteLine(guessIndex);
+                    toDisplay[guessIndex] = guess;
+                    
                 }
             }
-        
+
+            //string found = myList.Find(x => x.StartsWith("j"));
 
         }
 

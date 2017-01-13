@@ -16,7 +16,7 @@ namespace MysteryWord
         static List<string> characters = new List<string>();
         static List<string> blanks = new List<string>();
         static List<string> charsUsed = new List<string>();
-        static bool winner = false;
+        static bool noWinner = true;
         static int guessCount = 8;
         static string testMode;
 
@@ -31,17 +31,12 @@ namespace MysteryWord
             Console.WriteLine("Would you like to play in test mode? (Y/N): ");
             testMode = Console.ReadLine();
 
-            while (guessCount > 0)
+            //While user still has guesses left and has not guessed the word...
+            while (guessCount > 0 && noWinner)
             {
                 Console.Clear();
 
-                if (winner)
-                {
-                    Console.WriteLine($"Congratulations! The word was {word}!");
-                    DisplayBoard();
-                    Environment.Exit(0);
-                }
-
+                //If in test mode, show word
                 if (testMode.ToLower() == "y")
                 {
                     Console.WriteLine(word);
@@ -49,10 +44,17 @@ namespace MysteryWord
 
                 DisplayBoard();
                 GetGuess();
+                CheckForWinLoss();
+            }
+
+            if (noWinner == false)
+            {
+                Console.WriteLine($"Congratulations! The word was {word}!");
+                DisplayBoard();
             }
 
             //If out of guesses...
-            if (guessCount == 0)
+            else if (guessCount == 0)
             {
                 Console.Clear();
                 blanks.ForEach(Console.Write);
@@ -117,8 +119,6 @@ namespace MysteryWord
         -----------------------*/
         public static void GetGuess()
         {
-            CheckForWinLoss();
-
             Console.WriteLine("\n");
             Console.WriteLine("Take a guess! ");
             string guess = Console.ReadLine();
@@ -193,10 +193,11 @@ namespace MysteryWord
         public static void CheckForWinLoss()
         {
             //If all letters have been guessed...
-            if (!blanks.Contains("_"))
+            if (!blanks.Contains("_ "))
             {
-                winner = true;
+                noWinner = false;
             }
+            
         }
 
     }

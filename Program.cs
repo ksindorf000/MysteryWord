@@ -25,6 +25,7 @@ namespace MysteryWord
         -----------------------*/
         static void Main(string[] args)
         {
+
             GetWord();
 
             Console.WriteLine("Would you like to play in test mode? (Y/N): ");
@@ -33,6 +34,13 @@ namespace MysteryWord
             while (guessCount > 0)
             {
                 Console.Clear();
+
+                if (winner)
+                {
+                    Console.WriteLine($"Congratulations! The word was {word}!");
+                    DisplayBoard();
+                    Environment.Exit(0);
+                }
 
                 if (testMode.ToLower() == "y")
                 {
@@ -51,7 +59,6 @@ namespace MysteryWord
                 Console.WriteLine("You ran out of guesses. " +
                     $"The word was {word}.");
                 Console.ReadLine();
-                //Environment.Exit(1);
             }
 
         }
@@ -90,9 +97,8 @@ namespace MysteryWord
         -----------------------*/
         public static void DisplayBoard()
         {
-            //If not user's first turn and user has not
-            //guessed the same number of times as there are chars in the word...
-            if (charsUsed.Count() > 0 && charsUsed.Count() < word.Length)
+            //If not user's first turn
+            if (charsUsed.Count() > 0)
             {
                 Console.WriteLine($"You have {guessCount} guesses left! ");
                 Console.Write("So far, you have guessed: ");
@@ -100,15 +106,9 @@ namespace MysteryWord
                 Console.WriteLine("\n");
             }
 
-            //If the user has guessed the same number of times as 
-            //there are chars in the word...
-            else if (charsUsed.Count() == word.Length)
-            {
-                CheckForWinLoss();
-            }
-
             //Display blanks
             blanks.ForEach(Console.Write);
+
         }
 
         /*------------------------
@@ -117,6 +117,8 @@ namespace MysteryWord
         -----------------------*/
         public static void GetGuess()
         {
+            CheckForWinLoss();
+
             Console.WriteLine("\n");
             Console.WriteLine("Take a guess! ");
             string guess = Console.ReadLine();
@@ -175,7 +177,7 @@ namespace MysteryWord
             }
 
             Console.Clear();
-            
+
             //Clear indexes of matched letters
             charIndexes.Clear();
 
@@ -191,11 +193,10 @@ namespace MysteryWord
         public static void CheckForWinLoss()
         {
             //If all letters have been guessed...
-            if (blanks.Count() == characters.Count())
+            if (!blanks.Contains("_"))
             {
-                winner = blanks == characters ? true : false;
+                winner = true;
             }
-
         }
 
     }

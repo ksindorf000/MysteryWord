@@ -18,6 +18,7 @@ namespace MysteryWord
         static List<string> charsUsed = new List<string>();
         static bool winner = false;
         static int guessCount = 8;
+        static string testMode;
 
         /*------------------------
         Main()
@@ -26,18 +27,31 @@ namespace MysteryWord
         {
             GetWord();
 
+            Console.WriteLine("Would you like to play in test mode? (Y/N): ");
+            testMode = Console.ReadLine();
+
             while (guessCount > 0)
             {
+                Console.Clear();
+
+                if (testMode.ToLower() == "y")
+                {
+                    Console.WriteLine(word);
+                }
+
                 DisplayBoard();
-                CheckForWin();
                 GetGuess();
-                Console.WriteLine("");
             }
 
+            //If out of guesses...
             if (guessCount == 0)
             {
-                Console.WriteLine("You ran out of guesses. Sorry!");
+                Console.Clear();
+                blanks.ForEach(Console.Write);
+                Console.WriteLine("You ran out of guesses. " +
+                    $"The word was {word}.");
                 Console.ReadLine();
+                //Environment.Exit(1);
             }
 
         }
@@ -68,22 +82,33 @@ namespace MysteryWord
                 blanks.Add("_ ");
             }
 
-            Console.WriteLine(word);
-
         }
 
         /*------------------------
         DisplayBoard()
-            Accepts and validates the user's guess
+            Displays number of guesses remaining, letters guessed, and blanks<>
         -----------------------*/
         public static void DisplayBoard()
         {
-            for (int i = 0; i < word.Length; i++)
+            //If not user's first turn and user has not
+            //guessed the same number of times as there are chars in the word...
+            if (charsUsed.Count() > 0 && charsUsed.Count() < word.Length)
             {
-                Console.Write(blanks.ElementAt(i));
+                Console.WriteLine($"You have {guessCount} guesses left! ");
+                Console.Write("So far, you have guessed: ");
+                charsUsed.ForEach(Console.Write);
+                Console.WriteLine("\n");
             }
 
-            Console.WriteLine($"\n You have {guessCount} guesses left! \n");
+            //If the user has guessed the same number of times as 
+            //there are chars in the word...
+            else if (charsUsed.Count() == word.Length)
+            {
+                CheckForWinLoss();
+            }
+
+            //Display blanks
+            blanks.ForEach(Console.Write);
         }
 
         /*------------------------
@@ -92,6 +117,7 @@ namespace MysteryWord
         -----------------------*/
         public static void GetGuess()
         {
+            Console.WriteLine("\n");
             Console.WriteLine("Take a guess! ");
             string guess = Console.ReadLine();
 
@@ -105,57 +131,71 @@ namespace MysteryWord
         public static void Validate(string guess)
         {
             List<int> charIndexes = new List<int>();
-            bool decrGuess = true; //Derement Guess Counter
+            bool decrGuess = true; //Decrement Guess Counter
 
-            //If character has already been guessed, try again until valid 
+            //If character has already been guessed, try again 
             if (charsUsed.Contains(guess))
             {
-                GetGuess();
+                Console.WriteLine($"Sorry! \"{guess}\" has already been guessed! " +
+                    "Press ENTER to try again.");
+                Console.ReadLine();
+                decrGuess = false;
             }
-
-            //If guess matches a letter in the word, catalog the index of the letter
-            for (int i = 0; i < word.Length; i++)
+            else
             {
-                if (characters[i] == guess)
+                //Add the character that was guessed to the list of characters used
+                charsUsed.Add(guess);
+
+                //If guess matches a letter in the word, catalog the index of the letter
+                for (int i = 0; i < word.Length; i++)
                 {
-                    charIndexes.Add(i);
-                    decrGuess = false;
+                    if (characters[i] == guess)
+                    {
+                        charIndexes.Add(i);
+                        decrGuess = false;
+                    }
                 }
-            }
 
-            //If guess matched, change the value at the index(es) cataloged
-            for (int i = 0; i < charIndexes.Count(); i ++)
-            {
-                int x = charIndexes[i];
-                blanks[x] = characters[x];
+                //If guess matched, change the value at the index(es)cataloged
+                for (int i = 0; i < charIndexes.Count(); i++)
+                {
+                    int x = charIndexes[i];
+                    blanks[x] = characters[x];
+                }
             }
 
             //If answer was incorrect, decrement the number of guesses left
             if (decrGuess)
             {
                 guessCount--;
-                Console.WriteLine("Sorry, that letter is not in the word!");
+                Console.WriteLine($"Sorry, \"{guess}\" is not in the word! " +
+                    "Press ENTER to try again.");
                 Console.ReadLine();
                 Console.Clear();
             }
-            else
-            {
-                Console.Clear();
-            }
-            
-            //Add the character that was guessed to the list of characters used
-            charsUsed.Add(guess);
 
+            Console.Clear();
+            
+            //Clear indexes of matched letters
             charIndexes.Clear();
+
+            //Reset decrement boolean
+            decrGuess = false;
 
         }
 
-        public static void CheckForWin()
+        /*------------------------
+        CheckForWinLoss()
+            Checks to see if all of the spaces are filled correctly
+        -----------------------*/
+        public static void CheckForWinLoss()
         {
-            for (int i = 0; i < word.Length; i ++)
+            //If all letters have been guessed...
+            if (blanks.Count() == characters.Count())
             {
-                winner = blanks[i] == characters[i] ? true : false;
+                winner = blanks == characters ? true : false;
             }
+
         }
 
     }

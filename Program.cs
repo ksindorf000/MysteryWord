@@ -16,6 +16,7 @@ namespace MysteryWord
         static List<string> characters = new List<string>();
         static List<string> blanks = new List<string>();
         static List<string> charsUsed = new List<string>();
+        static bool winner = false;
         static int guessCount = 8;
 
         /*------------------------
@@ -28,9 +29,17 @@ namespace MysteryWord
             while (guessCount > 0)
             {
                 DisplayBoard();
+                CheckForWin();
                 GetGuess();
                 Console.WriteLine("");
             }
+
+            if (guessCount == 0)
+            {
+                Console.WriteLine("You ran out of guesses. Sorry!");
+                Console.ReadLine();
+            }
+
         }
 
         /*------------------------
@@ -59,7 +68,7 @@ namespace MysteryWord
                 blanks.Add("_ ");
             }
 
-            //Console.WriteLine(word);
+            Console.WriteLine(word);
 
         }
 
@@ -134,12 +143,19 @@ namespace MysteryWord
                 Console.Clear();
             }
             
-
             //Add the character that was guessed to the list of characters used
             charsUsed.Add(guess);
 
             charIndexes.Clear();
 
+        }
+
+        public static void CheckForWin()
+        {
+            for (int i = 0; i < word.Length; i ++)
+            {
+                winner = blanks[i] == characters[i] ? true : false;
+            }
         }
 
     }

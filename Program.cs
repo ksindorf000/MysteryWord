@@ -341,7 +341,7 @@ namespace MysteryWord
                 for (int i = 0; i < charIndexes.Count(); i++)
                 {
                     int x = charIndexes[i];
-                    blanks[x] = characters[x];
+                    blanks[x] = characters[x] + " ";
                 }
             }
 

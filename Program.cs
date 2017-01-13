@@ -233,38 +233,32 @@ namespace MysteryWord
         public static void CreateWordLists()
         {
             //Easy Mode word list (up to 6 characters)
-            if (diffLevel == 0)
+            for (int i = 0; i < wordList.Length; i++)
             {
-                for (int i = 0; i < wordList.Length; i++)
+                if (wordList[i].Length <= 6)
                 {
-                    if (wordList[i].Length <= 6)
-                    {
-                        easyList.Add(wordList[i]);
-                    }
+                    easyList.Add(wordList[i]);
                 }
             }
-            else if (diffLevel == 1)
+
+            //Medium Mode word list (6-10 characters)
+            for (int i = 0; i < wordList.Length; i++)
             {
-                //Medium Mode word list (6-10 characters)
-                for (int i = 0; i < wordList.Length; i++)
+                if (wordList[i].Length >= 6 && wordList[i].Length <= 10)
                 {
-                    if (wordList[i].Length >= 6 && wordList[i].Length <= 10)
-                    {
-                        medList.Add(wordList[i]);
-                    }
+                    medList.Add(wordList[i]);
                 }
             }
-            else if (diffLevel == 2)
+
+            //Hard Mode word list (10+ characters)
+            for (int i = 0; i < wordList.Length; i++)
             {
-                //Hard Mode word list (10+ characters)
-                for (int i = 0; i < wordList.Length; i++)
+                if (wordList[i].Length >= 10)
                 {
-                    if (wordList[i].Length >= 10)
-                    {
-                        hardList.Add(wordList[i]);
-                    }
+                    hardList.Add(wordList[i]);
                 }
             }
+
         }
 
         /*------------------------

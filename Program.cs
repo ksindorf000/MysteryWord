@@ -21,6 +21,7 @@ namespace MysteryWord
         static List<string> characters = new List<string>();
         static List<string> blanks = new List<string>();
         static List<string> charsUsed = new List<string>();
+
         static bool noWinner = true;
         static int guessCount = 8;
         static string testMode;
@@ -30,6 +31,8 @@ namespace MysteryWord
         -----------------------*/
         static void Main(string[] args)
         {
+            CreateWordLists();
+
             bool playAgain = true;
 
             while (playAgain)
@@ -39,6 +42,9 @@ namespace MysteryWord
 
         }
 
+        /*------------------------
+        PlayGame()
+        -----------------------*/
         public static bool PlayGame()
         {
             bool playAgain = true;
@@ -177,8 +183,6 @@ namespace MysteryWord
         -----------------------*/
         public static void GetWord()
         {
-            CreateWordLists();
-
             int i;
             var rwg = new Random();
             int randIndex;
@@ -202,13 +206,13 @@ namespace MysteryWord
                 word = hardList[randIndex];
             }
             //ALL//
-            else if (diffLevel == 4)
+            else if (diffLevel == 3)
             {
                 randIndex = rwg.Next(wordList.Count());
                 word = wordList[randIndex];
             }
 
-            //Add each character to the characters List
+            //Add each character to the characters list
             for (i = 0; i < word.Length; i++)
             {
                 characters.Add(word.Substring(i, 1));
@@ -228,7 +232,7 @@ namespace MysteryWord
         -----------------------*/
         public static void CreateWordLists()
         {
-            //Easy Mode List (up to 6 characters)
+            //Easy Mode word list (up to 6 characters)
             if (diffLevel == 0)
             {
                 for (int i = 0; i < wordList.Length; i++)
@@ -241,7 +245,7 @@ namespace MysteryWord
             }
             else if (diffLevel == 1)
             {
-                //Medium Mode List (6-10 characters)
+                //Medium Mode word list (6-10 characters)
                 for (int i = 0; i < wordList.Length; i++)
                 {
                     if (wordList[i].Length >= 6 && wordList[i].Length <= 10)
@@ -252,7 +256,7 @@ namespace MysteryWord
             }
             else if (diffLevel == 2)
             {
-                //Hard Mode List (10+ characters)
+                //Hard Mode word list (10+ characters)
                 for (int i = 0; i < wordList.Length; i++)
                 {
                     if (wordList[i].Length >= 10)
@@ -260,8 +264,6 @@ namespace MysteryWord
                         hardList.Add(wordList[i]);
                     }
                 }
-
-
             }
         }
 

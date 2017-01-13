@@ -123,7 +123,11 @@ namespace MysteryWord
             Console.WriteLine("Take a guess! ");
             string guess = Console.ReadLine();
 
-            Validate(guess);
+            //If guess contains only one letter (no ints) then validate
+            if (guess.All(char.IsLetter) && guess.Length == 1) {
+                Validate(guess);
+            }
+
         }
 
         /*------------------------

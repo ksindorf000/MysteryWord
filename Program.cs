@@ -15,23 +15,22 @@ namespace MysteryWord
         static string word;
         static List<string> characters = new List<string>();
         static List<string> blanks = new List<string>();
-
+        static List<string> charsUsed = new List<string>();
+        static int guessCount = 8;
 
         /*------------------------
         Main()
         -----------------------*/
         static void Main(string[] args)
         {
-
-            //while (guessCount <= 8)
-            //{
             GetWord();
-            DisplayBoard();
-            GetGuess();
-            DisplayBoard();
 
-
-            //}
+            while (guessCount > 0)
+            {
+                DisplayBoard();
+                GetGuess();
+                Console.WriteLine("");
+            }
         }
 
         /*------------------------
@@ -60,6 +59,8 @@ namespace MysteryWord
                 blanks.Add("_ ");
             }
 
+            //Console.WriteLine(word);
+
         }
 
         /*------------------------
@@ -68,40 +69,76 @@ namespace MysteryWord
         -----------------------*/
         public static void DisplayBoard()
         {
-            Console.WriteLine(word);
-
             for (int i = 0; i < word.Length; i++)
             {
                 Console.Write(blanks.ElementAt(i));
             }
 
-            Console.WriteLine();
+            Console.WriteLine($"\n You have {guessCount} guesses left! \n");
         }
-
 
         /*------------------------
         GetGuess()
-            Accepts and validates the user's guess
+            Accepts the user's guess and calls for validation
         -----------------------*/
         public static void GetGuess()
         {
             Console.WriteLine("Take a guess! ");
             string guess = Console.ReadLine();
-            bool keepChecking = true;
 
-            while (keepChecking)
+            Validate(guess);
+        }
+
+        /*------------------------
+        Validate()
+            Accepts and validates the user's guess
+        -----------------------*/
+        public static void Validate(string guess)
+        {
+            List<int> charIndexes = new List<int>();
+            bool decrGuess = true; //Derement Guess Counter
+
+            //If character has already been guessed, try again until valid 
+            if (charsUsed.Contains(guess))
             {
-                if (characters.Contains(guess))
+                GetGuess();
+            }
+
+            //If guess matches a letter in the word, catalog the index of the letter
+            for (int i = 0; i < word.Length; i++)
+            {
+                if (characters[i] == guess)
                 {
-                    keepChecking = false;
+                    charIndexes.Add(i);
+                    decrGuess = false;
                 }
             }
 
-            if (!keepChecking)
+            //If guess matched, change the value at the index(es) cataloged
+            for (int i = 0; i < charIndexes.Count(); i ++)
             {
-                int i = characters.IndexOf(guess);
-                blanks[i] = characters[i];
+                int x = charIndexes[i];
+                blanks[x] = characters[x];
             }
+
+            //If answer was incorrect, decrement the number of guesses left
+            if (decrGuess)
+            {
+                guessCount--;
+                Console.WriteLine("Sorry, that letter is not in the word!");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            else
+            {
+                Console.Clear();
+            }
+            
+
+            //Add the character that was guessed to the list of characters used
+            charsUsed.Add(guess);
+
+            charIndexes.Clear();
 
         }
 

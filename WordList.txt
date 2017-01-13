@@ -6420,7 +6420,7 @@ bayou
 bays
 bazaar
 bazein
-bazein/gr
+bazeingr
 bazooka
 bb
 bc
@@ -20721,7 +20721,7 @@ eider
 eiderdown
 eidetic
 eidoloclast
-eidolon/gr
+eidolongr
 eidouranion
 eight
 eight spot
@@ -21971,7 +21971,7 @@ erodium
 erogenous
 erolia
 eros
-eros/gr
+eros
 erose
 erosion
 erosive
@@ -22761,7 +22761,7 @@ expensiveness
 experience
 experienced
 experiences
-experientiagr/gnothi
+experientia
 experiential
 experiment
 experimental
@@ -23046,9 +23046,9 @@ eyewitness
 eyot
 eyre
 eyry
-ezochen/gr
-ezochin/
-ezokin/gr
+ezochengr
+ezochin
+ezokingr
 fte
 fted
 faon
@@ -26172,7 +26172,7 @@ geisha
 geist
 gekkonidae
 gel
-gelasma/gr
+gelasmagr
 gelatin
 gelatinous
 gelatinousness
@@ -26203,7 +26203,7 @@ gems
 gemsbok
 gemuthe
 gen
-gen/gr
+gengr
 gendarme
 gendarmerie
 gender
@@ -27127,22 +27127,6 @@ goy
 gpa
 grce
 gr
-gr/
-gr/anerythmon
-gr/ariston
-gr/dos
-gr/eidolon/gr
-gr/eros/gr
-gr/gnothi
-gr/hysteron
-gr/kat
-gr/kudos/gr
-gr/noemata/gr
-gr/phonanta
-gr/pou
-gr/storge/gr
-gr/to
-gr/trikumia/
 grab
 grab
 grabble
@@ -34009,7 +33993,7 @@ kali
 kalki
 kalmia
 kalon
-kalon/gr
+kalon
 kalotermes
 kalotermitidae
 kalumpang
@@ -34532,7 +34516,7 @@ krypterophaneron
 krypton
 kshatriya
 kuchean
-kudos/gr
+kudos
 kudu
 kudzu
 kui
@@ -38950,7 +38934,7 @@ metrification
 metritis
 metro
 metrology
-metron/gr
+metron
 metronome
 metropolis
 metropolitan
@@ -41863,7 +41847,7 @@ nodular
 nodule
 nodulose
 nodus
-noemata/gr
+noemata
 nog
 noggin
 nogging
@@ -48506,7 +48490,7 @@ preparing
 prepayment
 prepense
 prepollence
-prepon/gr
+prepon
 preponderance
 preponderant
 preponderate
@@ -49327,7 +49311,7 @@ proteles
 proteolysis
 proteolytic
 proterochampsa
-proteron/gr
+proteron
 proterozoic
 protervity
 protest
@@ -54778,7 +54762,7 @@ seated
 seating
 seats
 seattle
-seauton/gr
+seauton
 seawan
 seawant
 seaward
@@ -58987,7 +58971,7 @@ stizidae
 stizostedion
 stketcher
 sto
-sto/gr
+sto
 stoat
 stoccado
 stochastic
@@ -59099,7 +59083,7 @@ storeria
 storeroom
 stores
 storeship
-storge/gr
+storge
 storied
 storing
 stork
@@ -60605,7 +60589,7 @@ synergistic
 synergy
 synesthesia
 synesthetic
-synetoisy/gr
+synetoisy
 syngenic
 syngnathidae
 syngnathus
@@ -63522,7 +63506,7 @@ trigram
 trigrammatic
 trigrammic
 trigraph
-trikumia/
+trikumia
 trilateral
 trilingual
 trilisa

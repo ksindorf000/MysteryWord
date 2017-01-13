@@ -11,7 +11,8 @@ namespace MysteryWord
     {
         //Write contents of WordList into an Array
         static string[] wordList = File.ReadAllLines(@"..\..\WordList.txt");
-        
+
+        static int diffLevel = 0; //0=Easy, 1=Medium, 2=Hard, 3=All
         static List<string> easyList = new List<string>();
         static List<string> medList = new List<string>();
         static List<string> hardList = new List<string>();
@@ -29,8 +30,21 @@ namespace MysteryWord
         -----------------------*/
         static void Main(string[] args)
         {
+            bool playAgain = true;
+
+            while (playAgain)
+            {
+                playAgain = PlayGame();
+            }
+
+        }
+
+        public static bool PlayGame()
+        {
+            bool playAgain = true;
+
             SelectMode();
-            
+
             //While user still has guesses left and has not guessed the word...
             while (guessCount > 0 && noWinner)
             {
@@ -49,8 +63,11 @@ namespace MysteryWord
 
             if (noWinner == false)
             {
-                Console.WriteLine($"Congratulations! The word was {word}!");
-                DisplayBoard();
+                Console.WriteLine($"Congratulations! YOU WIN! \n" +
+                    $"The word was {word}!" +
+                    "Play again? (Y/N)");
+                playAgain = Console.ReadLine().ToLower() == "y" ? true : false;
+                noWinner = true;
             }
 
             //If out of guesses...
@@ -58,10 +75,20 @@ namespace MysteryWord
             {
                 Console.Clear();
                 blanks.ForEach(Console.Write);
-                Console.WriteLine("You ran out of guesses. " +
-                    $"The word was {word}.");
-                Console.ReadLine();
+                Console.WriteLine("\n" + "You ran out of guesses. \n" +
+                    $"The word was {word}." + "Play again? (Y/N)");
+                playAgain = Console.ReadLine().ToLower() == "y" ? true : false;
+                guessCount = 0;
             }
+
+            Console.Clear();
+
+            charsUsed.Clear();
+            characters.Clear();
+            blanks.Clear();
+            word = string.Empty;
+
+            return (playAgain);
 
         }
 
@@ -76,7 +103,6 @@ namespace MysteryWord
 
             //Check (and validate) to get difficulty level
             string userChoice;
-            int diffLevel = 0; //0=Easy, 1=Medium, 2=Hard, 3=All
             bool validInput = true;
 
             while (validInput)
@@ -88,9 +114,9 @@ namespace MysteryWord
                     "Whatevs: words of all levels");
                 userChoice = Console.ReadLine();
 
-                if (userChoice.ToLower() != "easy" && userChoice.ToLower() != "medium" && 
+                if (userChoice.ToLower() != "easy" && userChoice.ToLower() != "medium" &&
                     userChoice.ToLower() != "hard" && userChoice.ToLower() != "whatevs")
-                {   
+                {
                     Console.Clear();
                     Console.WriteLine("Invalid Input");
                     Console.ReadLine();
@@ -140,7 +166,7 @@ namespace MysteryWord
                 }
             }
 
-            GetWord(diffLevel);
+            GetWord();
         }
 
         /*------------------------
@@ -149,7 +175,7 @@ namespace MysteryWord
             Creates a List<string> to hold the characters of the word
             Creates a List<string> the size of the word and fills it with blanks
         -----------------------*/
-        public static void GetWord(int diffLevel)
+        public static void GetWord()
         {
             CreateWordLists();
 
@@ -203,32 +229,40 @@ namespace MysteryWord
         public static void CreateWordLists()
         {
             //Easy Mode List (up to 6 characters)
-            for (int i = 0; i < wordList.Length; i++)
+            if (diffLevel == 0)
             {
-                if (wordList[i].Length <= 6)
+                for (int i = 0; i < wordList.Length; i++)
                 {
-                    easyList.Add(wordList[i]);
+                    if (wordList[i].Length <= 6)
+                    {
+                        easyList.Add(wordList[i]);
+                    }
                 }
             }
-
-            //Medium Mode List (6-10 characters)
-            for (int i = 0; i < wordList.Length; i++)
+            else if (diffLevel == 1)
             {
-                if (wordList[i].Length >= 6 && wordList[i].Length <= 10)
+                //Medium Mode List (6-10 characters)
+                for (int i = 0; i < wordList.Length; i++)
                 {
-                    medList.Add(wordList[i]);
+                    if (wordList[i].Length >= 6 && wordList[i].Length <= 10)
+                    {
+                        medList.Add(wordList[i]);
+                    }
                 }
             }
-
-            //Hard Mode List (10+ characters)
-            for (int i = 0; i < wordList.Length; i++)
+            else if (diffLevel == 2)
             {
-                if (wordList[i].Length >= 10)
+                //Hard Mode List (10+ characters)
+                for (int i = 0; i < wordList.Length; i++)
                 {
-                    hardList.Add(wordList[i]);
+                    if (wordList[i].Length >= 10)
+                    {
+                        hardList.Add(wordList[i]);
+                    }
                 }
-            }
 
+
+            }
         }
 
         /*------------------------

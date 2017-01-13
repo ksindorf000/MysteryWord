@@ -25,11 +25,27 @@ namespace MysteryWord
         -----------------------*/
         static void Main(string[] args)
         {
+            bool testModeValid = true;
 
             GetWord();
 
-            Console.WriteLine("Would you like to play in test mode? (Y/N): ");
-            testMode = Console.ReadLine();
+            //Check (and validate) to see if user wants to play in test mode
+            while (testModeValid)
+            {
+                Console.WriteLine("Would you like to play in test mode? (Y/N): ");
+                testMode = Console.ReadLine();
+
+                if (testMode.ToLower() == "y" || testMode.ToLower() == "n")
+                {
+                    testModeValid = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid Input");
+                    Console.ReadLine();
+                }
+            }
 
             //While user still has guesses left and has not guessed the word...
             while (guessCount > 0 && noWinner)
@@ -92,7 +108,7 @@ namespace MysteryWord
             }
 
         }
-
+        
         /*------------------------
         DisplayBoard()
             Displays number of guesses remaining, letters guessed, and blanks<>
@@ -125,16 +141,22 @@ namespace MysteryWord
 
             //If guess contains only one letter (no ints) then validate
             if (guess.All(char.IsLetter) && guess.Length == 1) {
-                Validate(guess);
+                ValidateGuess(guess);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine($"{guess} is invalid.");
+                Console.ReadLine();
             }
 
         }
 
         /*------------------------
-        Validate()
+        ValidateGuess()
             Accepts and validates the user's guess
         -----------------------*/
-        public static void Validate(string guess)
+        public static void ValidateGuess(string guess)
         {
             List<int> charIndexes = new List<int>();
             bool decrGuess = true; //Decrement Guess Counter
